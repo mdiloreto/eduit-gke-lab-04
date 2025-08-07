@@ -4,6 +4,9 @@ substitutions:
   _CLUSTER: gke-cicd-cluster
   _ZONE: us-central1-c
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
@@ -29,4 +32,3 @@ steps:
 
 images:
 - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA'
-

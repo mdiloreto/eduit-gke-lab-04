@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: IMAGE_URL 
+        image: IMAGE_URL ## << Estó será reemplazado por tu cloudbuild.yaml cuando se ejecute (ver linea 25)
         ports:
         - containerPort: 8080
