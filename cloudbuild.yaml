@@ -1,0 +1,31 @@
+substitutions:
+  _REGION: us-central1
+  _REPO: cicd-lab-repo
+  _CLUSTER: gke-cicd-cluster
+  _ZONE: us-central1-c
+
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    [
+      'build', '-t', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA', '.'
+    ]
+
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    [
+      'push', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA'
+    ]
+
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args:
+    - -c
+    - |
+      sed "s#IMAGE_URL#$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA#g" k8s/deployment.yaml > k8s/deployment.tmp.yaml
+      gcloud container clusters get-credentials $_CLUSTER --zone $_ZONE
+      kubectl apply -f k8s/deployment.tmp.yaml
+      kubectl apply -f k8s/service.yaml
+
+images:
+- '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA'

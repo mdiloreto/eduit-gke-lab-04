@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación Flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>¡Bienvenido a la Aplicación Flask!</h1>
+        <img src="{{ url_for('static', filename='cat.jpg') }}" alt="Gato" width="300" style="margin-top: 20px; border-radius: 10px;">
+        <p>Esta es una simple aplicación Flask para fines educativos.</p>
+        <div class="info">
+            <p><strong>Nombre de la Imagen:</strong> {{ image_name }}</p>
+            <p><strong>Nombre del Tag:</strong> {{ tag_name }}</p>
+            <p><strong>Nombre del Pod:</strong> {{ pod_name }}</p>
+            <p><strong>Versión:</strong> <span style="color: green;">{{ version }}</span></p>
+        </div>
+    </div>
+</body>
+</html>
