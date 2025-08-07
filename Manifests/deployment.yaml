@@ -17,3 +17,10 @@ spec:
         image: IMAGE_URL ## << Estó será reemplazado por tu cloudbuild.yaml cuando se ejecute (ver linea 25)
         ports:
         - containerPort: 8080
+        env:
+        - name: APP_VERSION
+          value: "v1.0.0"
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name

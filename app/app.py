@@ -9,7 +9,7 @@ def hello_world():
     image_name = os.environ.get('IMAGE_NAME', 'No establecido')
     tag_name = os.environ.get('TAG_NAME', 'No establecido')
     pod_name = os.environ.get('POD_NAME', 'No establecido')
-    version = "v1.0.0"
+    version = os.environ.get('APP_VERSION', 'v1.0.0')
     return render_template('index.html', image_name=image_name, tag_name=tag_name, pod_name=pod_name, version=version)
 
 if __name__ == '__main__':

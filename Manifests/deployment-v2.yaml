@@ -6,14 +6,21 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: flask-app-v2
+      app: flask-app
   template:
     metadata:
       labels:
-        app: flask-app-v2
+        app: flask-app
     spec:
       containers:
       - name: flask-app-v2
         image: IMAGE_URL ## << Estó será reemplazado por tu cloudbuild.yaml cuando se ejecute (ver linea 25)
         ports:
         - containerPort: 8080
+        env:
+        - name: APP_VERSION
+          value: "v2.0.0"
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
