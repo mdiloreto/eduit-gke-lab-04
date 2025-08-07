@@ -25,11 +25,14 @@ steps:
   args:
     - -c
     - |
-      sed "s#IMAGE_URL#$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA#g" Manifests/deployment.yaml > Manifests/deployment.tmp.yaml
+      sed "s#IMAGE_URL#$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA#g" Manifests-canary/deployment.yaml > Manifests-canary/deployment.tmp.yaml
+      sed "s#IMAGE_URL#$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA#g" Manifests-canary/deployment-v2.yaml > Manifests-canary/deployment-v2.tmp.yaml
       gcloud container clusters get-credentials $_CLUSTER --zone $_ZONE
-      kubectl apply -f Manifests/deployment.tmp.yaml
-      kubectl apply -f Manifests/service.yaml
+      kubectl apply -f Manifests-canary/deployment.tmp.yaml
+      kubectl apply -f Manifests-canary/deployment-v2.tmp.yaml
+      kubectl apply -f Manifests-canary/service.yaml
+      kubectl apply -f Manifests-canary/service-v2.yaml
+      kubectl apply -f Manifests-canary/ingress.yaml
 
 images:
 - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA'
-

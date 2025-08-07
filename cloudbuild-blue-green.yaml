@@ -25,11 +25,13 @@ steps:
   args:
     - -c
     - |
-      sed "s#IMAGE_URL#$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA#g" Manifests/deployment.yaml > Manifests/deployment.tmp.yaml
+      sed "s#IMAGE_URL#$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA#g" Manifests-blue-green/deployment.yaml > Manifests-blue-green/deployment.tmp.yaml
+      sed "s#IMAGE_URL#$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA#g" Manifests-blue-green/deployment-v2.yaml > Manifests-blue-green/deployment-v2.tmp.yaml
       gcloud container clusters get-credentials $_CLUSTER --zone $_ZONE
-      kubectl apply -f Manifests/deployment.tmp.yaml
-      kubectl apply -f Manifests/service.yaml
+      kubectl apply -f Manifests-blue-green/deployment.tmp.yaml
+      kubectl apply -f Manifests-blue-green/deployment-v2.tmp.yaml
+      kubectl apply -f Manifests-blue-green/service.yaml
+      kubectl apply -f Manifests-blue-green/service-v2.yaml
 
 images:
 - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA'
-
