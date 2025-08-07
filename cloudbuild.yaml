@@ -27,8 +27,8 @@ steps:
     - |
       sed "s#IMAGE_URL#$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA#g" k8s/deployment.yaml > k8s/deployment.tmp.yaml
       gcloud container clusters get-credentials $_CLUSTER --zone $_ZONE
-      kubectl apply -f k8s/deployment.tmp.yaml
-      kubectl apply -f k8s/service.yaml
+      kubectl apply -f Manifests/deployment.tmp.yaml
+      kubectl apply -f Manifests/service.yaml
 
 images:
 - '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA'
