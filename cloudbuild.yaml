@@ -11,13 +11,13 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
     [
-      'build', '-t', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA', 'app'
+      'build', '-t', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA', 'app'
     ]
 
 - name: 'gcr.io/cloud-builders/docker'
   args:
     [
-      'push', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA'
+      'push', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA'
     ]
 
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -25,11 +25,11 @@ steps:
   args:
     - -c
     - |
-      sed "s#IMAGE_URL#$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA#g" Manifests/deployment.yaml > Manifests/deployment.tmp.yaml
+      sed "s#IMAGE_URL#$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA#g" Manifests/deployment.yaml > Manifests/deployment.tmp.yaml
       gcloud container clusters get-credentials $_CLUSTER --zone $_ZONE
       kubectl apply -f Manifests/deployment.tmp.yaml
       kubectl apply -f Manifests/service.yaml
 
 images:
-- '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA'
+- '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA'
 
