@@ -11,7 +11,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
     [
-      'build', '-t', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA', '.'
+      'build', '-t', '$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/helloworld:$SHORT_SHA', 'app'
     ]
 
 - name: 'gcr.io/cloud-builders/docker'
