@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app-v2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-app-v2
+  template:
+    metadata:
+      labels:
+        app: flask-app-v2
+    spec:
+      containers:
+      - name: flask-app-v2
+        image: IMAGE_URL ## << Estó será reemplazado por tu cloudbuild.yaml cuando se ejecute (ver linea 25)
+        ports:
+        - containerPort: 8080
